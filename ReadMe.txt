@@ -26,12 +26,3 @@ This code uses 2-D steerable filters for feature detection, developed by Francoi
 Developed by:
 Marcelo Cicconet
 marceloc.net
-
-
-@misc{PixelClassifier2017,
-  author        = {M. Cicconet},
-  title         = {PixelClassifier: a single-layer Random Forest model for pixel classification (image segmentation).},
-  howpublished  = {https://github.com/HMS-IDAC/PixelClassifier},
-  year          = {2017},
-  note          = {Matlab software}
-}
