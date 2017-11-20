@@ -17,7 +17,7 @@ modelPath = '~/Workspace/model.mat';
 nSubsets = 100;
 % the set of pixels to be classified is split in this many subsets;
 % if nSubsets > 1, the subsets are classified using 'parfor' with
-% the currently-opened parallel pool (or a new default one if none isopen);
+% the currently-opened parallel pool (or a new default one if none is open);
 % see imClassify.m for details;
 % it's recommended to set nSubsets > the number of cores in the parallel pool;
 % this can make classification substantially faster than when a

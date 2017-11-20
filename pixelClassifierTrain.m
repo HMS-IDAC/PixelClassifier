@@ -80,7 +80,7 @@ lb = [];
 tic
 for imIndex = 1:nImages
     fprintf('computing features from image %d of %d\n', imIndex, nImages);
-    F = imageFeatures(imageList{imIndex},sigmas,offsets,osSigma,radii,cfSigma,logSigmas,sfSigmas);
+    [F,featNames] = imageFeatures(imageList{imIndex},sigmas,offsets,osSigma,radii,cfSigma,logSigmas,sfSigmas);
     L = labelList{imIndex};
     [rfFeat,rfLbl] = rfFeatAndLab(F,L);
     ft = [ft; rfFeat];
@@ -92,7 +92,8 @@ fprintf('time spent computing features: %f s\n', toc);
 
 fprintf('training...'); tic
 [treeBag,featImp,oobPredError] = rfTrain(ft,lb,nTrees,minLeafSize);
-figureQSS, subplot(1,2,1), plot(featImp,'o'), title('feature importance')
+figureQSS
+subplot(1,2,1), barh(featImp), set(gca,'yticklabel',featNames'), set(gca,'YTick',1:length(featNames)), title('feature importance')
 subplot(1,2,2), plot(oobPredError), title('out-of-bag classification error')
 fprintf('training time: %f s\n', toc);
 
