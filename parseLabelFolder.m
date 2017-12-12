@@ -29,13 +29,7 @@ nClasses = length(classIndices);
 imageList = cell(1,nImages);
 labelList = cell(1,nImages);
 for i = 1:nImages
-    I = imread(imagePaths{i});
-    if size(I,3) == 2
-        I = I(:,:,1);
-    elseif size(I,3) == 3
-        I = rgb2gray(I);
-    end
-    I = double(I)/65535;
+    I = imreadGrayscaleDouble(imagePaths{i});
     [imp,imn] = fileparts(imagePaths{i});
     L = uint8(zeros(size(I)));
     for j = 1:nClasses

@@ -48,13 +48,7 @@ end
 
 for imIndex = 1:length(imagePaths)
     fprintf('classifying image %d of %d...',imIndex,length(imagePaths));
-    I = imread(imagePaths{imIndex});
-    if size(I,3) == 2
-        I = I(:,:,1);
-    elseif size(I,3) == 3
-        I = rgb2gray(I);
-    end
-    I = double(I)/65535;
+    I = imreadGrayscaleDouble(imagePaths{imIndex});
 
     tic
     F = imageFeatures(I,model.sigmas,model.offsets,model.osSigma,model.radii,model.cfSigma,model.logSigmas,model.sfSigmas);
