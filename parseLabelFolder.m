@@ -1,4 +1,5 @@
 function [imageList,labelList,classIndices] = parseLabelFolder(dirPath)
+% reads images and generates class-balanced labels from annotations
 
 files = dir(dirPath);
 
@@ -30,14 +31,28 @@ imageList = cell(1,nImages);
 labelList = cell(1,nImages);
 for i = 1:nImages
     I = imreadGrayscaleDouble(imagePaths{i});
-    [imp,imn] = fileparts(imagePaths{i});
-    L = uint8(zeros(size(I)));
+    [imp,imn,ime] = fileparts(imagePaths{i});
+    
+    nSamplesPerClass = zeros(1,nClasses);
+    lbMaps = cell(1,nClasses);
     for j = 1:nClasses
         classJ = imread([imp filesep imn sprintf('_Class%d.png',classIndices(j))]);
         classJ = (classJ(:,:,1) > 0);
+        nSamplesPerClass(j) = sum(classJ(:));
+        lbMaps{j} = classJ;
+    end
+    
+    [minNSamp,indMinNSamp] = min(nSamplesPerClass);
+    
+    L = uint8(zeros(size(I)));
+    for j = 1:nClasses
+        if j ~= indMinNSamp
+            classJ = lbMaps{j} & (rand(size(classJ)) < minNSamp/nSamplesPerClass(j));
+        else
+            classJ = lbMaps{j};
+        end
         L(classJ) = j;
     end
-%     imshow([repmat(255*I,[1 1 3]) label2rgb(L,'winter','k')]), pause
 
     imageList{i} = I;
     labelList{i} = L;
