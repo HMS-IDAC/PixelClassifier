@@ -7,7 +7,11 @@ files = dir(dirPath);
 nImages = 0;
 for i = 1:length(files)
     fName = files(i).name;
-    if ~contains(fName,'Class') && ~contains(fName,'.mat') && fName(1) ~= '.'
+    if ~files(i).isdir && ...
+       ~contains(fName,'Class') && ...
+       ~contains(fName,'.mat') && ...
+       ~contains(fName,'.db') && ...
+       fName(1) ~= '.'
         nImages = nImages+1;
         imagePaths{nImages} = [dirPath filesep fName];
     end
@@ -31,7 +35,7 @@ imageList = cell(1,nImages);
 labelList = cell(1,nImages);
 for i = 1:nImages
     I = imreadGrayscaleDouble(imagePaths{i});
-    [imp,imn,ime] = fileparts(imagePaths{i});
+    [imp,imn] = fileparts(imagePaths{i});
     
     nSamplesPerClass = zeros(1,nClasses);
     lbMaps = cell(1,nClasses);

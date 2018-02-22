@@ -38,7 +38,7 @@ files = dir(testPath);
 nImages = 0;
 for i = 1:length(files)
     fName = files(i).name;
-    if ~contains(fName,'Class') && fName(1) ~= '.'
+    if ~contains(fName,'.db') && ~contains(fName,'Class') && fName(1) ~= '.'
         nImages = nImages+1;
         imagePaths{nImages} = [testPath filesep fName];
     end
